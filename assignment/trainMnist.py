@@ -35,7 +35,8 @@ class myCallback(tf.keras.callbacks.Callback):
 
 
 # GRADED FUNCTION: train_mnist
-def train_mnist(x_train, y_train):
+# GRADED FUNCTION: train_mnist
+def train_mnist(x_train, y_train, model_path):
     
     # Instantiate the callback class
     callbacks = myCallback()
@@ -45,8 +46,6 @@ def train_mnist(x_train, y_train):
         tf.keras.layers.Flatten(input_shape=(28, 28)),
         tf.keras.layers.Dense(512, activation=tf.nn.relu),
         tf.keras.layers.Dense(10, activation=tf.nn.softmax)
-        
-
     ]) 
 
     # Compile the model
@@ -57,6 +56,11 @@ def train_mnist(x_train, y_train):
     # Fit the model for 10 epochs adding the callbacks
     # and save the training history
     history = model.fit(x_train, y_train, epochs=10, callbacks=[callbacks])
+    
+    # Save the trained model to a file
+    model.save(model_path)
+    
     return history
 
-hist = train_mnist(x_train, y_train)
+model_path = 'assignment/model'
+hist = train_mnist(x_train, y_train, model_path)
